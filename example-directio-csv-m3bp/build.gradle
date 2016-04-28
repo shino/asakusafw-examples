@@ -6,20 +6,32 @@ buildscript {
         maven { url 'http://asakusafw.s3.amazonaws.com/maven/snapshots' }
     }
     dependencies {
-        classpath group: 'com.asakusafw.spark', name: 'asakusa-spark-gradle', version: '0.3.1-SNAPSHOT'
+        classpath group: 'com.asakusafw.m3bp', name: 'asakusa-m3bp-gradle', version: '0.1.1-SNAPSHOT'
     }
 }
 
 apply plugin: 'asakusafw-sdk'
 apply plugin: 'asakusafw-organizer'
 apply plugin: 'asakusafw-mapreduce'
-apply plugin: 'asakusafw-spark'
+apply plugin: 'asakusafw-m3bp'
 apply plugin: 'eclipse'
 
 asakusafwOrganizer {
     profiles.prod {
         assembly.into('example-dataset') {
             put 'src/test/example-dataset'
+        }
+        assembly.into('.') {
+            put 'custom/m3bp-profile'
+        }
+//        m3bp.useSystemHadoop true
+    }
+}
+
+asakusafw {
+    m3bp {
+        if (System.getProperty('CMAKE_TOOLCHAIN_FILE') != null) {
+            compilerProperties += ['m3bp.native.cmake.CMAKE_TOOLCHAIN_FILE': file(System.getProperty('CMAKE_TOOLCHAIN_FILE'))]
         }
     }
 }
