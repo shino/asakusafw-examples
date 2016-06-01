@@ -57,7 +57,8 @@ public abstract class CategorySummaryOperator {
      * @return 結合結果
      * @see #selectAvailableItem(List, SalesDetail)
      */
-    @MasterJoin(selection = "selectAvailableItem")
+//    @MasterJoin(selection = "selectAvailableItem")
+    @MasterJoin
     public abstract JoinedSalesInfo joinItemInfo(ItemInfo info, SalesDetail sales);
 
     /**
