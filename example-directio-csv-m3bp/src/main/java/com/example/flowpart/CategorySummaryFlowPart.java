@@ -20,11 +20,7 @@ import com.asakusafw.vocabulary.flow.FlowPart;
 import com.asakusafw.vocabulary.flow.In;
 import com.asakusafw.vocabulary.flow.Out;
 import com.asakusafw.vocabulary.flow.util.CoreOperatorFactory;
-import com.example.modelgen.dmdl.model.CategorySummary;
-import com.example.modelgen.dmdl.model.ErrorRecord;
-import com.example.modelgen.dmdl.model.ItemInfo;
-import com.example.modelgen.dmdl.model.SalesDetail;
-import com.example.modelgen.dmdl.model.StoreInfo;
+import com.example.modelgen.dmdl.model.*;
 import com.example.operator.CategorySummaryOperatorFactory;
 import com.example.operator.CategorySummaryOperatorFactory.CheckStore;
 import com.example.operator.CategorySummaryOperatorFactory.JoinItemInfo;
@@ -79,7 +75,9 @@ public class CategorySummaryFlowPart extends FlowDescription {
         CheckStore checkStore = operators.checkStore(storeInfo, salesDetail);
 
         // 売上に商品情報を載せる
-        JoinItemInfo joinItemInfo = operators.joinItemInfo(itemInfo, checkStore.found);
+        core.stop(itemInfo);
+        CoreOperatorFactory.Empty<ItemInfo> emptyItem = core.empty(ItemInfo.class);
+        JoinItemInfo joinItemInfo = operators.joinItemInfo(emptyItem, checkStore.found);
 
         // 売上をカテゴリ別に集計
         SummarizeByCategory summarize = operators.summarizeByCategory(joinItemInfo.joined);
