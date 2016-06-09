@@ -10,6 +10,10 @@ buildscript {
     }
 }
 
+// repositories {
+//     mavenLocal()
+// }
+
 apply plugin: 'asakusafw-sdk'
 apply plugin: 'asakusafw-organizer'
 apply plugin: 'asakusafw-mapreduce'
@@ -21,6 +25,14 @@ asakusafwOrganizer {
         assembly.into('example-dataset') {
             put 'src/test/example-dataset'
         }
+    }
+
+}
+
+asakusafw {
+    spark {
+        option 'operator.masterjoin.remove.empty.master', true
+        option 'operator.masterjoin.remove.empty.transaction', true
     }
 }
 

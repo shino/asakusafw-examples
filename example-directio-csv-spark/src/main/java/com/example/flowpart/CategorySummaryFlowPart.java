@@ -31,6 +31,8 @@ import com.example.operator.CategorySummaryOperatorFactory.JoinItemInfo;
 import com.example.operator.CategorySummaryOperatorFactory.SetErrorMessage;
 import com.example.operator.CategorySummaryOperatorFactory.SummarizeByCategory;
 
+import static com.asakusafw.vocabulary.flow.util.CoreOperators.empty;
+
 /**
  * カテゴリ別に売上の集計を計算する。
  */
@@ -76,9 +78,13 @@ public class CategorySummaryFlowPart extends FlowDescription {
         CategorySummaryOperatorFactory operators = new CategorySummaryOperatorFactory();
 
         // 店舗コードが妥当かどうか調べる
-        CheckStore checkStore = operators.checkStore(storeInfo, salesDetail);
+        core.stop(salesDetail);
+        CoreOperatorFactory.Empty<SalesDetail> emptySales = core.empty(SalesDetail.class);
+        CheckStore checkStore = operators.checkStore(storeInfo, emptySales);
 
         // 売上に商品情報を載せる
+//        core.stop(itemInfo);
+//        CoreOperatorFactory.Empty<ItemInfo> emptyItem = core.empty(ItemInfo.class);
         JoinItemInfo joinItemInfo = operators.joinItemInfo(itemInfo, checkStore.found);
 
         // 売上をカテゴリ別に集計
