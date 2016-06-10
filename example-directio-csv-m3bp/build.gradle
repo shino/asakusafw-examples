@@ -6,13 +6,14 @@ buildscript {
         maven { url 'http://asakusafw.s3.amazonaws.com/maven/snapshots' }
     }
     dependencies {
+        // classpath group: 'com.asakusafw.m3bp', name: 'asakusa-m3bp-gradle', version: '0.1.1'
         classpath group: 'com.asakusafw.m3bp', name: 'asakusa-m3bp-gradle', version: '0.1.2-SNAPSHOT'
     }
 }
 
-repositories {
-    mavenLocal()
-}
+// repositories {
+//     mavenLocal()
+// }
 
 apply plugin: 'asakusafw-sdk'
 apply plugin: 'asakusafw-organizer'
@@ -33,12 +34,12 @@ asakusafwOrganizer {
 }
 
 asakusafw {
-    // m3bp {
-    //     if (System.getProperty('M3BP_CMAKE_TOOLCHAIN_FILE') != null) {
-    //         compilerProperties += ['m3bp.native.cmake.CMAKE_TOOLCHAIN_FILE': file(System.getProperty('M3BP_CMAKE_TOOLCHAIN_FILE'))]
-    //     }
-    // }
-    m3bp.option 'm3bp.native.cmake.CMAKE_TOOLCHAIN_FILE', System.getProperty('M3BP_CMAKE_TOOLCHAIN_FILE')
+    m3bp {
+        if (System.getProperty('M3BP_CMAKE_TOOLCHAIN_FILE') != null) {
+            compilerProperties += ['m3bp.native.cmake.CMAKE_TOOLCHAIN_FILE': file(System.getProperty('M3BP_CMAKE_TOOLCHAIN_FILE'))]
+        }
+    }
+    // m3bp.option 'm3bp.native.cmake.CMAKE_TOOLCHAIN_FILE', System.getProperty('M3BP_CMAKE_TOOLCHAIN_FILE')
     m3bp.option 'operator.masterjoin.remove.empty.master', true
     m3bp.option 'operator.masterjoin.remove.empty.transaction', true
 

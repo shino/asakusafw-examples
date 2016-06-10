@@ -72,12 +72,16 @@ public class CategorySummaryFlowPart extends FlowDescription {
         CategorySummaryOperatorFactory operators = new CategorySummaryOperatorFactory();
 
         // 店舗コードが妥当かどうか調べる
-        CheckStore checkStore = operators.checkStore(storeInfo, salesDetail);
+//         core.stop(salesDetail);
+//         CoreOperatorFactory.Empty<SalesDetail> emptySalesDetail = core.empty(SalesDetail.class);
+        core.stop(storeInfo);
+        CoreOperatorFactory.Empty<StoreInfo> emptyStoreInfo = core.empty(StoreInfo.class);
+        CheckStore checkStore = operators.checkStore(emptyStoreInfo, salesDetail);
 
         // 売上に商品情報を載せる
-        core.stop(itemInfo);
-        CoreOperatorFactory.Empty<ItemInfo> emptyItem = core.empty(ItemInfo.class);
-        JoinItemInfo joinItemInfo = operators.joinItemInfo(emptyItem, checkStore.found);
+//       core.stop(itemInfo);
+//       CoreOperatorFactory.Empty<ItemInfo> emptyItemInfo = core.empty(ItemInfo.class);
+        JoinItemInfo joinItemInfo = operators.joinItemInfo(itemInfo, checkStore.found);
 
         // 売上をカテゴリ別に集計
         SummarizeByCategory summarize = operators.summarizeByCategory(joinItemInfo.joined);

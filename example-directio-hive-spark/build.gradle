@@ -18,6 +18,11 @@ apply plugin: 'eclipse'
 
 asakusafwOrganizer {
     hive.enabled true
+    profiles.prod {
+        assembly.into('example-dataset') {
+            put 'src/test/example-dataset'
+        }
+    }
 }
 
 dependencies {
