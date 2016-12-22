@@ -24,6 +24,6 @@ out_parq = {
     key : TEXT;
 
     "dec"
-    @directio.hive.field(name = "dec")
-    decimal : DECIMAL;
+    @directio.hive.field(name = "value")
+    value : DECIMAL;
 };
