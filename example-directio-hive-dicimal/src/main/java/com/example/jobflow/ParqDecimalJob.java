@@ -28,7 +28,7 @@ import com.example.modelgen.dmdl.model.OutParq;
 /**
  * カテゴリ別に売上の集計を計算する。
  */
-@JobFlow(name = "byCategory")
+@JobFlow(name = "convert")
 public class ParqDecimalJob extends FlowDescription {
 
     final In<InCsv> inCsv;

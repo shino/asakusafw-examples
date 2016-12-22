@@ -21,10 +21,19 @@ asakusafw {
     }
 }
 
+repositories {
+    // https://www.cloudera.com/documentation/enterprise/release-notes/topics/cdh_vd_cdh5_maven_repo.html
+    maven { url 'https://repository.cloudera.com/artifactory/cloudera-repos/' }
+    maven { url "http://conjars.org/repo" }
+}
+
 asakusafwOrganizer {
     hive.enabled true
-    vanilla.enabled true
+    // http://asakusafw.s3.amazonaws.com/documents/latest/develop/ja/html/application/gradle-plugin-reference.html#hive
+    // https://www.cloudera.com/documentation/enterprise/release-notes/topics/cdh_vd_cdh5_maven_repo_58x.html
+    hive.libraries = ['org.apache.hive:hive-exec:1.1.0-cdh5.8.0']
 
+    vanilla.enabled true
     profiles.prod {
         vanilla.useSystemHadoop false
     }
