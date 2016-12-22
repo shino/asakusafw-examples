@@ -1,0 +1,27 @@
+group 'com.example'
+
+buildscript {
+    repositories {
+        maven { url 'http://asakusafw.s3.amazonaws.com/maven/releases' }
+        maven { url 'http://asakusafw.s3.amazonaws.com/maven/snapshots' }
+    }
+    dependencies {
+        classpath group: 'com.asakusafw.gradle', name: 'asakusa-distribution', version: '0.9.1-SNAPSHOT'
+    }
+}
+
+apply plugin: 'asakusafw-sdk'
+apply plugin: 'asakusafw-organizer'
+apply plugin: 'asakusafw-mapreduce'
+apply plugin: 'asakusafw-spark'
+apply plugin: 'eclipse'
+
+asakusafw {
+    sdk {
+        hive true
+    }
+}
+
+asakusafwOrganizer {
+    hive.enabled true
+}
