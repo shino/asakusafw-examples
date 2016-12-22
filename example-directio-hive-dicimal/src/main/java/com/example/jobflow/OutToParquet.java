@@ -15,26 +15,25 @@
  */
 package com.example.jobflow;
 
-import com.example.modelgen.dmdl.hive.orc.AbstractSalesDetailOrcFileInputDescription;
+import java.util.Arrays;
+import java.util.List;
 
-/**
- * 売上明細をDirect I/Oで入力する。
- * 入力ファイルは {@code sales} 上のすべてのファイル。
- */
-public class SalesDetailFromOrc extends AbstractSalesDetailOrcFileInputDescription {
+import com.example.modelgen.dmdl.hive.parquet.AbstractOutParqParquetFileOutputDescription;
+
+public class OutToParquet extends AbstractOutParqParquetFileOutputDescription {
 
     @Override
     public String getBasePath() {
-        return "tables/sales_detail";
+        return "out_parq";
     }
 
     @Override
     public String getResourcePattern() {
-        return "**/*";
+        return "*.parq";
     }
 
     @Override
-    public DataSize getDataSize() {
-        return DataSize.LARGE;
+    public List<String> getDeletePatterns() {
+        return Arrays.asList("*");
     }
 }

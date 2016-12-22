@@ -15,27 +15,22 @@
  */
 package com.example.jobflow;
 
-import com.example.modelgen.dmdl.hive.parquet.AbstractStoreInfoParquetFileInputDescription;
+import com.example.modelgen.dmdl.csv.AbstractInCsvCsvInputDescription;
 
-/**
- * 店舗マスタをDirect I/Oで入力する。
- * 入力ファイルは {@code master} 上のすべてのファイル。
- */
-public class StoreInfoFromParquet extends AbstractStoreInfoParquetFileInputDescription {
+public class InFromCsv extends AbstractInCsvCsvInputDescription {
 
     @Override
     public String getBasePath() {
-        return "tables/store_info";
+        return "in_csv";
     }
 
     @Override
     public String getResourcePattern() {
-        return "**/*";
+        return "**/*.csv";
     }
 
     @Override
     public DataSize getDataSize() {
-        // 店舗マスタは小さい前提
-        return DataSize.TINY;
+        return DataSize.LARGE;
     }
 }

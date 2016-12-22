@@ -13,28 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.jobflow;
+package com.example.batch;
 
-import com.example.modelgen.dmdl.hive.parquet.AbstractItemInfoParquetFileInputDescription;
+import com.asakusafw.vocabulary.batch.Batch;
+import com.asakusafw.vocabulary.batch.BatchDescription;
+import com.example.jobflow.ParqDecimalJob;
 
 /**
- * 商品マスタをDirect I/Oで入力する。
- * 入力ファイルは {@code master} 上のすべてのファイル。
+ * 売上の集計を計算する。
  */
-public class ItemInfoFromParquet extends AbstractItemInfoParquetFileInputDescription {
+@Batch(name = "example.parq_dec")
+public class ParqDecimal extends BatchDescription {
 
     @Override
-    public String getBasePath() {
-        return "tables/item_info";
-    }
-
-    @Override
-    public String getResourcePattern() {
-        return "**/*";
-    }
-
-    @Override
-    public DataSize getDataSize() {
-        return DataSize.LARGE;
+    protected void describe() {
+        run(ParqDecimalJob.class).soon();
     }
 }

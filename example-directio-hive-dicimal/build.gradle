@@ -12,8 +12,7 @@ buildscript {
 
 apply plugin: 'asakusafw-sdk'
 apply plugin: 'asakusafw-organizer'
-apply plugin: 'asakusafw-mapreduce'
-apply plugin: 'asakusafw-spark'
+apply plugin: 'asakusafw-vanilla'
 apply plugin: 'eclipse'
 
 asakusafw {
@@ -24,4 +23,9 @@ asakusafw {
 
 asakusafwOrganizer {
     hive.enabled true
+    vanilla.enabled true
+
+    profiles.prod {
+        vanilla.useSystemHadoop false
+    }
 }
