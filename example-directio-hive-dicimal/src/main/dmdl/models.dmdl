@@ -23,7 +23,7 @@ out_parq = {
     @directio.hive.field(name = "key")
     key : TEXT;
 
-    "dec"
+    "value"
     @directio.hive.field(name = "value")
     value : DECIMAL;
 };
