@@ -45,12 +45,14 @@ OK
 Time taken: 0.116 seconds
 
 hive> select * from out_parq;
-aaaa    NULL
+aaaa    NULL                  #### NULL になっている
 Time taken: 0.391 seconds, Fetched: 1 row(s)
 ```
 
 Impala での Parquet 読み込み on CDH
 ===================================
+
+Impala では decimal 部分でエラーが発生する。
 
 ```
 [cloudera@quickstart ~]$ impala-shell
