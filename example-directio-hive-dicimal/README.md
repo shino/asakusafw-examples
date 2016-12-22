@@ -17,6 +17,17 @@ $ mkdir -p ~/target/testing/directio/in_csv/
 $ echo "aaaa,100" > ~/target/testing/directio/in_csv/a.csv
 ```
 
+バッチ実行例
+```
+$ ASAKUSA_HOME=$PWD/build/asakusafw-assembly-prod/ ./build/asakusafw-assembly-prod/yaess/bin/yaess-batch.sh vanilla.example.parq_dec | tee yaess.log
+```
+
+parquet 出力先
+```
+% ls ~/target/testing/directio/out_parq
+v1-1.parq
+```
+
 環境
 ====
 
