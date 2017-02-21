@@ -17,6 +17,9 @@ package com.example.operator;
 
 import java.util.List;
 
+import com.asakusafw.runtime.core.Result;
+import com.asakusafw.vocabulary.model.Joined;
+import com.asakusafw.vocabulary.operator.*;
 import com.example.modelgen.dmdl.model.CategorySummary;
 import com.example.modelgen.dmdl.model.ErrorRecord;
 import com.example.modelgen.dmdl.model.ItemInfo;
@@ -27,11 +30,6 @@ import com.asakusafw.runtime.value.Date;
 import com.asakusafw.runtime.value.DateTime;
 import com.asakusafw.runtime.value.DateUtil;
 import com.asakusafw.vocabulary.model.Key;
-import com.asakusafw.vocabulary.operator.MasterCheck;
-import com.asakusafw.vocabulary.operator.MasterJoin;
-import com.asakusafw.vocabulary.operator.MasterSelection;
-import com.asakusafw.vocabulary.operator.Summarize;
-import com.asakusafw.vocabulary.operator.Update;
 
 /**
  * カテゴリ別合計を計算するフローの演算子セット。
@@ -59,6 +57,12 @@ public abstract class CategorySummaryOperator {
      */
     @MasterJoin(selection = "selectAvailableItem")
     public abstract JoinedSalesInfo joinItemInfo(ItemInfo info, SalesDetail sales);
+
+    @CoGroup
+    public void coGroupSample(@Key(group = "item_code", order="beginDate") List<ItemInfo> infoList,
+                                         @Key(group = "item_code", order = "amount") List<SalesDetail> salesList,
+                                         Result<JoinedSalesInfo> salesOut){
+    }
 
     /**
      * {@link #selectAvailableItem(List, SalesDetail)}で利用するバッファ。

@@ -80,9 +80,15 @@ public class CategorySummaryFlowPart extends FlowDescription {
 
         // 売上に商品情報を載せる
         JoinItemInfo joinItemInfo = operators.joinItemInfo(itemInfo, checkStore.found);
-
         // 売上をカテゴリ別に集計
         SummarizeByCategory summarize = operators.summarizeByCategory(joinItemInfo.joined);
+
+        // CoGroup サンプル
+        CategorySummaryOperatorFactory.CoGroupSample coGroupSample = operators.coGroupSample(itemInfo, checkStore.found);
+        SetErrorMessage unknownStore2 = operators.setErrorMessage(
+                core.restructure(coGroupSample.salesOut, ErrorRecord.class),
+                "店舗不明");
+        errorRecord.add(unknownStore2.out);
 
         // 集計結果を出力
         categorySummary.add(summarize.out);
